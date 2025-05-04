@@ -1,0 +1,7 @@
+<svg width="100" height="100" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
+  <!-- Primer arco superior -->
+  <path d="M 20,50 A 30,30 0 0,1 80,50" stroke="#f5fa0bA6" stroke-width="6" fill="none"/>
+  
+  <!-- Segundo arco inferior con menos separación, siguiendo la trayectoria circular -->
+  <path d="M 20,60 A 30,30 0 0,0 80,60" stroke="#f5fa0bA6" stroke-width="6" fill="none"/>
+</svg>

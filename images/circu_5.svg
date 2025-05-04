@@ -1,0 +1,26 @@
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(120,120)" fill="none" stroke-width="8">
+    <!-- Arco de 57°: punto final aproximadamente en (54.5, 83.2) -->
+    <path d="M 100 0 A 100 100 0 0 1 54.5 83.2" stroke="#f5fa0bA6" />
+
+    <!-- Segundo arco, rotado 72° -->
+    <g transform="rotate(72)">
+      <path d="M 100 0 A 100 100 0 0 1 54.5 83.2" stroke="#f5fa0bA6" />
+    </g>
+
+    <!-- Tercer arco, rotado 144° -->
+    <g transform="rotate(144)">
+      <path d="M 100 0 A 100 100 0 0 1 54.5 83.2" stroke="#f5fa0bA6" />
+    </g>
+
+    <!-- Cuarto arco, rotado 216° -->
+    <g transform="rotate(216)">
+      <path d="M 100 0 A 100 100 0 0 1 54.5 83.2" stroke="#f5fa0bA6" />
+    </g>
+
+    <!-- Quinto arco, rotado 288° -->
+    <g transform="rotate(288)">
+      <path d="M 100 0 A 100 100 0 0 1 54.5 83.2" stroke="#f5fa0bA6" />
+    </g>
+  </g>
+</svg>
