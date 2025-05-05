@@ -6,20 +6,54 @@ const char *password = "wilywily";
 
 WiFiServer server(80);
 
-String header;
-String output1State = "off";
-String output2State = "off";
-String output3State = "off";
-String output4State = "off";
-String output5State = "off";
-String output6State = "off";
+// Define output pins
+const int out_circ_grande_1 = 4;
+const int out_circ_grande_2 = 5;
+const int out_circ_grande_3 = 12;
+const int out_circ_grande_4 = 13;
+const int out_circ_grande_5 = 14;
 
-const int output1 = 4;  // GPIO 4
-const int output2 = 5;  // GPIO 5
-const int output3 = 12; // GPIO 12
-const int output4 = 13; // GPIO 13
-const int output5 = 14; // GPIO 14
-const int output6 = 15; // GPIO 15
+const int out_circ_med_1 = 15;
+const int out_circ_med_2 = 16;
+const int out_circ_med_3 = 17;
+const int out_circ_med_4 = 18;
+
+const int out_circ_peq_1 = 19;
+const int out_circ_peq_2 = 20;
+
+const int out_boton_heli = 21;
+const int out_boton_sec1 = 22;
+const int out_boton_sec2 = 23;
+const int out_boton_sec3 = 24;
+const int out_boton_sec4 = 25;
+const int out_boton_sec5 = 26;
+
+// Define output states
+const String COLOR_CIRC_APAGADO = "#f5fa0bA6";
+const String COLOR_CIRC_ENCENDIDO = "#f5fa0b";
+const String CLASE_BOTON_ON = "button_on";
+const String CLASE_BOTON_OFF = "button_off";
+
+String color_circ_grande_1 = COLOR_CIRC_APAGADO;
+String color_circ_grande_2 = COLOR_CIRC_APAGADO;
+String color_circ_grande_3 = COLOR_CIRC_APAGADO;
+String color_circ_grande_4 = COLOR_CIRC_APAGADO;
+String color_circ_grande_5 = COLOR_CIRC_APAGADO;
+
+String color_circ_med_1 = COLOR_CIRC_APAGADO;
+String color_circ_med_2 = COLOR_CIRC_APAGADO;
+String color_circ_med_3 = COLOR_CIRC_APAGADO;
+String color_circ_med_4 = COLOR_CIRC_APAGADO;
+
+String color_circ_peq_1 = COLOR_CIRC_APAGADO;
+String color_circ_peq_2 = COLOR_CIRC_APAGADO;
+
+String clase_boton_heli = CLASE_BOTON_OFF;
+String clase_boton_sec1 = CLASE_BOTON_OFF;
+String clase_boton_sec2 = CLASE_BOTON_OFF;
+String clase_boton_sec3 = CLASE_BOTON_OFF;
+String clase_boton_sec4 = CLASE_BOTON_OFF;
+String clase_boton_sec5 = CLASE_BOTON_OFF;
 
 unsigned long currentTime = millis();
 unsigned long previousTime = 0;
@@ -27,21 +61,50 @@ const long timeoutTime = 2000;
 
 String processor(String page)
 {
-  page.replace("%STATE1%", output1State);
-  page.replace("%STATE2%", output2State);
-  page.replace("%STATE3%", output3State);
-  page.replace("%STATE4%", output4State);
-  page.replace("%STATE5%", output5State);
-  page.replace("%STATE6%", output6State);
+  // Defining colors
+  page.replace("%color_circ_grande_1%", color_circ_grande_1);
+  page.replace("%color_circ_grande_2%", color_circ_grande_2);
+  page.replace("%color_circ_grande_3%", color_circ_grande_3);
+  page.replace("%color_circ_grande_4%", color_circ_grande_4);
+  page.replace("%color_circ_grande_5%", color_circ_grande_5);
 
-  page.replace("%BUTTON1%", output1State == "off" ? "<p>
-    <a href=\"/1/on\"><button class=\"button\">ON</button></a>
-    </p>" : "<p><a href=\"/1/off\"><button class=\"button button2\">OFF</button></a></p>");
-  page.replace("%BUTTON2%", output2State == "off" ? "<p><a href=\"/2/on\"><button class=\"button\">ON</button></a></p>" : "<p><a href=\"/2/off\"><button class=\"button button2\">OFF</button></a></p>");
-  page.replace("%BUTTON3%", output3State == "off" ? "<p><a href=\"/3/on\"><button class=\"button\">ON</button></a></p>" : "<p><a href=\"/3/off\"><button class=\"button button2\">OFF</button></a></p>");
-  page.replace("%BUTTON4%", output4State == "off" ? "<p><a href=\"/4/on\"><button class=\"button\">ON</button></a></p>" : "<p><a href=\"/4/off\"><button class=\"button button2\">OFF</button></a></p>");
-  page.replace("%BUTTON5%", output5State == "off" ? "<p><a href=\"/5/on\"><button class=\"button\">ON</button></a></p>" : "<p><a href=\"/5/off\"><button class=\"button button2\">OFF</button></a></p>");
-  page.replace("%BUTTON6%", output6State == "off" ? "<p><a href=\"/6/on\"><button class=\"button\">ON</button></a></p>" : "<p><a href=\"/6/off\"><button class=\"button button2\">OFF</button></a></p>");
+  page.replace("%color_circ_med_1%", color_circ_med_1);
+  page.replace("%color_circ_med_2%", color_circ_med_2);
+  page.replace("%color_circ_med_3%", color_circ_med_3);
+  page.replace("%color_circ_med_4%", color_circ_med_4);
+
+  page.replace("%color_circ_peq_1%", color_circ_peq_1);
+  page.replace("%color_circ_peq_2%", color_circ_peq_2);
+
+  // Defining classes
+  page.replace("%clase_boton_heli%", clase_boton_heli);
+  page.replace("%clase_boton_sec1%", clase_boton_sec1);
+  page.replace("%clase_boton_sec2%", clase_boton_sec2);
+  page.replace("%clase_boton_sec3%", clase_boton_sec3);
+  page.replace("%clase_boton_sec4%", clase_boton_sec4);
+  page.replace("%clase_boton_sec5%", clase_boton_sec5);
+
+  // Defining urls
+  page.replace("url_circ_grande_1", color_circ_grande_1 == COLOR_CIRC_APAGADO ? "/circ_grande_1/on" : "/circ_grande_1/off");
+  page.replace("url_circ_grande_2", color_circ_grande_2 == COLOR_CIRC_APAGADO ? "/circ_grande_2/on" : "/circ_grande_2/off");
+  page.replace("url_circ_grande_3", color_circ_grande_3 == COLOR_CIRC_APAGADO ? "/circ_grande_3/on" : "/circ_grande_3/off");
+  page.replace("url_circ_grande_4", color_circ_grande_4 == COLOR_CIRC_APAGADO ? "/circ_grande_4/on" : "/circ_grande_4/off");
+  page.replace("url_circ_grande_5", color_circ_grande_5 == COLOR_CIRC_APAGADO ? "/circ_grande_5/on" : "/circ_grande_5/off");
+
+  page.replace("url_circ_med_1", color_circ_med_1 == COLOR_CIRC_APAGADO ? "/circ_med_1/on" : "/circ_med_1/off");
+  page.replace("url_circ_med_2", color_circ_med_2 == COLOR_CIRC_APAGADO ? "/circ_med_2/on" : "/circ_med_2/off");
+  page.replace("url_circ_med_3", color_circ_med_3 == COLOR_CIRC_APAGADO ? "/circ_med_3/on" : "/circ_med_3/off");
+  page.replace("url_circ_med_4", color_circ_med_4 == COLOR_CIRC_APAGADO ? "/circ_med_4/on" : "/circ_med_4/off");
+
+  page.replace("url_circ_peq_1", color_circ_peq_1 == COLOR_CIRC_APAGADO ? "/circ_peq_1/on" : "/circ_peq_1/off");
+  page.replace("url_circ_peq_2", color_circ_peq_2 == COLOR_CIRC_APAGADO ? "/circ_peq_2/on" : "/circ_peq_2/off");
+
+  page.replace("%url_boton_heli%", clase_boton_heli == CLASE_BOTON_OFF ? "/boton_heli/on" : "/boton_heli/off");
+  page.replace("%url_boton_sec1%", clase_boton_sec1 == CLASE_BOTON_OFF ? "/boton_sec1/on" : "/boton_sec1/off");
+  page.replace("%url_boton_sec2%", clase_boton_sec2 == CLASE_BOTON_OFF ? "/boton_se2c/on" : "/boton_sec2/off");
+  page.replace("%url_boton_sec3%", clase_boton_sec3 == CLASE_BOTON_OFF ? "/boton_sec3/on" : "/boton_sec3/off");
+  page.replace("%url_boton_sec4%", clase_boton_sec4 == CLASE_BOTON_OFF ? "/boton_sec4/on" : "/boton_sec4/off");
+  page.replace("%url_boton_sec5%", clase_boton_sec5 == CLASE_BOTON_OFF ? "/boton_sec5/on" : "/boton_sec5/off");
 
   return page;
 }
@@ -50,21 +113,49 @@ void setup()
 {
   Serial.begin(115200);
 
-  pinMode(output1, OUTPUT);
-  pinMode(output2, OUTPUT);
-  pinMode(output3, OUTPUT);
-  pinMode(output4, OUTPUT);
-  pinMode(output5, OUTPUT);
-  pinMode(output6, OUTPUT);
+  pinMode(out_circ_grande_1, OUTPUT);
+  pinMode(out_circ_grande_2, OUTPUT);
+  pinMode(out_circ_grande_3, OUTPUT);
+  pinMode(out_circ_grande_4, OUTPUT);
+  pinMode(out_circ_grande_5, OUTPUT);
+
+  pinMode(out_circ_med_1, OUTPUT);
+  pinMode(out_circ_med_2, OUTPUT);
+  pinMode(out_circ_med_3, OUTPUT);
+  pinMode(out_circ_med_4, OUTPUT);
+
+  pinMode(out_circ_peq_1, OUTPUT);
+  pinMode(out_circ_peq_2, OUTPUT);
+
+  pinMode(out_boton_heli, OUTPUT);
+  pinMode(out_boton_sec1, OUTPUT);
+  pinMode(out_boton_sec2, OUTPUT);
+  pinMode(out_boton_sec3, OUTPUT);
+  pinMode(out_boton_sec4, OUTPUT);
+  pinMode(out_boton_sec5, OUTPUT);
 
   Serial.print("Pins set as output");
 
-  digitalWrite(output1, LOW);
-  digitalWrite(output2, LOW);
-  digitalWrite(output3, LOW);
-  digitalWrite(output4, LOW);
-  digitalWrite(output5, LOW);
-  digitalWrite(output6, LOW);
+  digitalWrite(out_circ_grande_1, LOW);
+  digitalWrite(out_circ_grande_2, LOW);
+  digitalWrite(out_circ_grande_3, LOW);
+  digitalWrite(out_circ_grande_4, LOW);
+  digitalWrite(out_circ_grande_5, LOW);
+
+  digitalWrite(out_circ_med_1, LOW);
+  digitalWrite(out_circ_med_2, LOW);
+  digitalWrite(out_circ_med_3, LOW);
+  digitalWrite(out_circ_med_4, LOW);
+
+  digitalWrite(out_circ_peq_1, LOW);
+  digitalWrite(out_circ_peq_2, LOW);
+
+  digitalWrite(out_boton_heli, LOW);
+  digitalWrite(out_boton_sec1, LOW);
+  digitalWrite(out_boton_sec2, LOW);
+  digitalWrite(out_boton_sec3, LOW);
+  digitalWrite(out_boton_sec4, LOW);
+  digitalWrite(out_boton_sec5, LOW);
 
   Serial.print("Connecting to ");
   Serial.println(ssid);
@@ -115,77 +206,209 @@ void loop()
             client.println();
 
             // Handle button presses
-            if (header.indexOf("GET /1/on") >= 0)
+            if (header.indexOf("GET /circ_grande_1/on") >= 0)
             {
-              Serial.println("GPIO 1 on");
-              output1State = "on";
-              digitalWrite(output1, HIGH);
+              Serial.println("url circ_grande_1 on");
+              color_circ_grande_1 = COLOR_CIRC_ENCENDIDO;
+              digitalWrite(out_circ_grande_1, HIGH);
             }
-            else if (header.indexOf("GET /1/off") >= 0)
+            else if (header.indexOf("GET /circ_grande_1/off") >= 0)
             {
-              Serial.println("GPIO 1 off");
-              output1State = "off";
-              digitalWrite(output1, LOW);
+              Serial.println("url circ_grande_1 off");
+              color_circ_grande_1 = COLOR_CIRC_APAGADO;
+              digitalWrite(out_circ_grande_1, LOW);
             }
-            else if (header.indexOf("GET /2/on") >= 0)
+            else if (header.indexOf("GET /circ_grande_2/on") >= 0)
             {
-              Serial.println("GPIO 2 on");
-              output2State = "on";
-              digitalWrite(output2, HIGH);
+              Serial.println("url circ_grande_2 on");
+              color_circ_grande_2 = COLOR_CIRC_ENCENDIDO;
+              digitalWrite(out_circ_grande_2, HIGH);
             }
-            else if (header.indexOf("GET /2/off") >= 0)
+            else if (header.indexOf("GET /circ_grande_2/off") >= 0)
             {
-              Serial.println("GPIO 2 off");
-              output2State = "off";
-              digitalWrite(output2, LOW);
+              Serial.println("url circ_grande_2 off");
+              color_circ_grande_2 = COLOR_CIRC_APAGADO;
+              digitalWrite(out_circ_grande_2, LOW);
             }
-            else if (header.indexOf("GET /3/on") >= 0)
+            else if (header.indexOf("GET /circ_grande_3/on") >= 0)
             {
-              Serial.println("GPIO 3 on");
-              output3State = "on";
-              digitalWrite(output3, HIGH);
+              Serial.println("url circ_grande_3 on");
+              color_circ_grande_3 = COLOR_CIRC_ENCENDIDO;
+              digitalWrite(out_circ_grande_3, HIGH);
             }
-            else if (header.indexOf("GET /3/off") >= 0)
+            else if (header.indexOf("GET /circ_grande_3/off") >= 0)
             {
-              Serial.println("GPIO 3 off");
-              output3State = "off";
-              digitalWrite(output3, LOW);
+              Serial.println("url circ_grande_3 off");
+              color_circ_grande_3 = COLOR_CIRC_APAGADO;
+              digitalWrite(out_circ_grande_3, LOW);
             }
-            else if (header.indexOf("GET /4/on") >= 0)
+            else if (header.indexOf("GET /circ_grande_4/on") >= 0)
             {
-              Serial.println("GPIO 4 on");
-              output4State = "on";
-              digitalWrite(output4, HIGH);
+              Serial.println("url circ_grande_4 on");
+              color_circ_grande_4 = COLOR_CIRC_ENCENDIDO;
+              digitalWrite(out_circ_grande_4, HIGH);
             }
-            else if (header.indexOf("GET /4/off") >= 0)
+            else if (header.indexOf("GET /circ_grande_4/off") >= 0)
             {
-              Serial.println("GPIO 4 off");
-              output4State = "off";
-              digitalWrite(output4, LOW);
+              Serial.println("url circ_grande_4 off");
+              color_circ_grande_4 = COLOR_CIRC_APAGADO;
+              digitalWrite(out_circ_grande_4, LOW);
             }
-            else if (header.indexOf("GET /5/on") >= 0)
+            else if (header.indexOf("GET /circ_grande_5/on") >= 0)
             {
-              Serial.println("GPIO 5 on");
-              output5State = "on";
-              digitalWrite(output5, HIGH);
+              Serial.println("url circ_grande_5 on");
+              color_circ_grande_5 = COLOR_CIRC_ENCENDIDO;
+              digitalWrite(out_circ_grande_5, HIGH);
             }
-            else if (header.indexOf("GET /5/off") >= 0)
+            else if (header.indexOf("GET /circ_grande_5/off") >= 0)
             {
-              Serial.println("GPIO 5 off");
-              output5State = "off";
-              digitalWrite(output5, LOW);
+              Serial.println("url circ_grande_5 off");
+              color_circ_grande_5 = COLOR_CIRC_APAGADO;
+              digitalWrite(out_circ_grande_5, LOW);
             }
-            else if (header.indexOf("GET /6/on") >= 0)
+            if (header.indexOf("GET /circ_med_1/on") >= 0)
             {
-              Serial.println("GPIO 6 on");
-              output6State = "on";
-              digitalWrite(output6, HIGH);
+              Serial.println("url circ_med_1 on");
+              color_circ_med_1 = COLOR_CIRC_ENCENDIDO;
+              digitalWrite(out_circ_med_1, HIGH);
             }
-            else if (header.indexOf("GET /6/off") >= 0)
+            else if (header.indexOf("GET /circ_med_1/off") >= 0)
             {
-              Serial.println("GPIO 6 off");
-              output6State = "off";
-              digitalWrite(output6, LOW);
+              Serial.println("url circ_med_1 off");
+              color_circ_med_1 = COLOR_CIRC_APAGADO;
+              digitalWrite(out_circ_med_1, LOW);
+            }
+            else if (header.indexOf("GET /circ_med_2/on") >= 0)
+            {
+              Serial.println("url circ_med_2 on");
+              color_circ_med_2 = COLOR_CIRC_ENCENDIDO;
+              digitalWrite(out_circ_med_2, HIGH);
+            }
+            else if (header.indexOf("GET /circ_med_2/off") >= 0)
+            {
+              Serial.println("url circ_med_2 off");
+              color_circ_med_2 = COLOR_CIRC_APAGADO;
+              digitalWrite(out_circ_med_2, LOW);
+            }
+            else if (header.indexOf("GET /circ_med_3/on") >= 0)
+            {
+              Serial.println("url circ_med_3 on");
+              color_circ_med_3 = COLOR_CIRC_ENCENDIDO;
+              digitalWrite(out_circ_med_3, HIGH);
+            }
+            else if (header.indexOf("GET /circ_med_3/off") >= 0)
+            {
+              Serial.println("url circ_med_3 off");
+              color_circ_med_3 = COLOR_CIRC_APAGADO;
+              digitalWrite(out_circ_med_3, LOW);
+            }
+            else if (header.indexOf("GET /circ_med_4/on") >= 0)
+            {
+              Serial.println("url circ_med_4 on");
+              color_circ_med_4 = COLOR_CIRC_ENCENDIDO;
+              digitalWrite(out_circ_med_4, HIGH);
+            }
+            else if (header.indexOf("GET /circ_med_4/off") >= 0)
+            {
+              Serial.println("url circ_med_4 off");
+              color_circ_med_4 = COLOR_CIRC_APAGADO;
+              digitalWrite(out_circ_med_4, LOW);
+            }
+            if (header.indexOf("GET /circ_peq_1/on") >= 0)
+            {
+              Serial.println("url circ_peq_1 on");
+              color_circ_peq_1 = COLOR_CIRC_ENCENDIDO;
+              digitalWrite(out_circ_peq_1, HIGH);
+            }
+            else if (header.indexOf("GET /circ_peq_1/off") >= 0)
+            {
+              Serial.println("url circ_peq_1 off");
+              color_circ_peq_1 = COLOR_CIRC_APAGADO;
+              digitalWrite(out_circ_peq_1, LOW);
+            }
+            else if (header.indexOf("GET /circ_peq_2/on") >= 0)
+            {
+              Serial.println("url circ_peq_2 on");
+              color_circ_peq_2 = COLOR_CIRC_ENCENDIDO;
+              digitalWrite(out_circ_peq_2, HIGH);
+            }
+            else if (header.indexOf("GET /circ_peq_2/off") >= 0)
+            {
+              Serial.println("url circ_peq_2 off");
+              color_circ_peq_2 = COLOR_CIRC_APAGADO;
+              digitalWrite(out_circ_peq_2, LOW);
+            }
+            else if (header.indexOf("GET /boton_heli/on") >= 0)
+            {
+              Serial.println("url boton_heli on");
+              clase_boton_heli = CLASE_BOTON_ON;
+              digitalWrite(out_boton_heli, HIGH);
+            }
+            else if (header.indexOf("GET /boton_heli/off") >= 0)
+            {
+              Serial.println("url boton_heli off");
+              clase_boton_heli = CLASE_BOTON_OFF;
+              digitalWrite(out_boton_heli, LOW);
+            }
+            else if (header.indexOf("GET /boton_sec1/on") >= 0)
+            {
+              Serial.println("url boton_sec1 on");
+              clase_boton_sec1 = CLASE_BOTON_ON;
+              digitalWrite(out_boton_sec1, HIGH);
+            }
+            else if (header.indexOf("GET /boton_sec1/off") >= 0)
+            {
+              Serial.println("url boton_sec1 off");
+              clase_boton_sec1 = CLASE_BOTON_OFF;
+              digitalWrite(out_boton_sec1, LOW);
+            }
+            else if (header.indexOf("GET /boton_sec2/on") >= 0)
+            {
+              Serial.println("url boton_sec2 on");
+              clase_boton_sec2 = CLASE_BOTON_ON;
+              digitalWrite(out_boton_sec2, HIGH);
+            }
+            else if (header.indexOf("GET /boton_sec2/off") >= 0)
+            {
+              Serial.println("url boton_sec2 off");
+              clase_boton_sec2 = CLASE_BOTON_OFF;
+              digitalWrite(out_boton_sec2, LOW);
+            }
+            else if (header.indexOf("GET /boton_sec3/on") >= 0)
+            {
+              Serial.println("url boton_sec3 on");
+              clase_boton_sec3 = CLASE_BOTON_ON;
+              digitalWrite(out_boton_sec3, HIGH);
+            }
+            else if (header.indexOf("GET /boton_sec3/off") >= 0)
+            {
+              Serial.println("url boton_sec3 off");
+              clase_boton_sec3 = CLASE_BOTON_OFF;
+              digitalWrite(out_boton_sec3, LOW);
+            }
+            else if (header.indexOf("GET /boton_sec4/on") >= 0)
+            {
+              Serial.println("url boton_sec4 on");
+              clase_boton_sec4 = CLASE_BOTON_ON;
+              digitalWrite(out_boton_sec4, HIGH);
+            }
+            else if (header.indexOf("GET /boton_sec4/off") >= 0)
+            {
+              Serial.println("url boton_sec4 off");
+              clase_boton_sec4 = CLASE_BOTON_OFF;
+              digitalWrite(out_boton_sec4, LOW);
+            }
+            else if (header.indexOf("GET /boton_sec5/on") >= 0)
+            {
+              Serial.println("url boton_sec5 on");
+              clase_boton_sec5 = CLASE_BOTON_ON;
+              digitalWrite(out_boton_sec5, HIGH);
+            }
+            else if (header.indexOf("GET /boton_sec5/off") >= 0)
+            {
+              Serial.println("url boton_sec5 off");
+              clase_boton_sec5 = CLASE_BOTON_OFF;
+              digitalWrite(out_boton_sec5, LOW);
             }
 
             client.println(processor(String(MAIN_page)));
