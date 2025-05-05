@@ -59,6 +59,8 @@ unsigned long currentTime = millis();
 unsigned long previousTime = 0;
 const long timeoutTime = 2000;
 
+String header;
+
 String processor(String page)
 {
   // Defining colors
