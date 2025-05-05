@@ -14,109 +14,117 @@ const char MAIN_page[] PROGMEM = R"rawliteral(
     />
 
     <style>
-      :root {
-        font-family: "Roboto", sans-serif;
-        font-size: 15px;
+      :root{
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
 
-        --principal: #2a9236;
-        --text-white: #fff;
-        --button_color: #ff2222;
-      }
+    --principal: #2a9236;
+    --text-white: #fff;
+    --button_color: #ff2222;
+}
 
-      body {
-        width: 412px;
-        height: 912px;
-        background-color: var(--principal);
-        padding: 0;
-        margin: 0;
-        position: relative;
-        top: -80px;
-      }
+body{
+  width: 412px;
+  height: 912px;
+  background-color: var(--principal);
+  padding: 0;
+  margin: 0;
+  position: relative;
+  top: -80px;
+}
 
-      .flex_row {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-      }
+.flex_row{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 
-      .flex_column {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
+.flex_column{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-      @media (max-width: 600px) {
-        .title {
-          color: var(--text-white);
-          font-size: 1.5rem;
-          margin: 3rem 0 2rem 0;
-        }
+@media (max-width: 600px) {
+  .title{
+    color: var(--text-white);
+    font-size: 1.5rem;
+    margin: 3rem 0 2rem 0;
+  }
 
-        .helipuerto {
-          /* background-color: red; */
-          width: 23rem;
-          height: 23rem;
+  .helipuerto{
+    /* background-color: red; */
+    width: 23rem;
+    height: 23rem;
+  
+    align-content: space-around;
+    margin-bottom: 2rem;
+  }
+  
+  .circulo{
+    width: 70%;
+    height: 70%;
+  }
+  
+  .fondo{
+    position: absolute;
+  }
 
-          align-content: space-around;
-          margin-bottom: 2rem;
-        }
+  #circulo_grande{
+    width: 100%;
+    height: 100%;
+    transform: rotate(60deg);
+    z-index: 2;
+  }
+  
+  #circulo_mediano{
+    /* background-color: green; */
+    transform: rotate(45deg);
+    z-index: 3;
+  }
+  
+  #circulo_peque{
+    transform: rotate(75deg);
+    z-index: 4;
+  }
+  
+  #h_central{
+    /* background-color: grey; */
+    background-position: center;
+    z-index: 5;
+  }
 
-        .circulo {
-          width: 70%;
-          height: 70%;
-        }
+  .buttons{
+    width: 99%;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    row-gap: 1.5rem;
+  }
 
-        .fondo {
-          position: absolute;
-        }
+  .buttons a{
+    width: 30%;
+  }
 
-        #circulo_grande {
-          width: 100%;
-          height: 100%;
-          transform: rotate(60deg);
-        }
+  .button{
+    font-weight: 700;
+    color: var(--text-white);
+    width: 100%;
+    padding: 1rem 0;
+    border: 1px solid var(--button_color);
+    background-color: var(--button_color);
+    border-radius: 1rem;
+  }
 
-        #circulo_mediano {
-          /* background-color: green; */
-          transform: rotate(45deg);
-        }
+  .button_off{
+    --button_color: #ff2222;
+  }
 
-        #circulo_peque {
-          transform: rotate(75deg);
-        }
-
-        #h_central {
-          /* background-color: grey; */
-          background-position: center;
-        }
-
-        .buttons {
-          width: 99%;
-          flex-wrap: wrap;
-          justify-content: space-evenly;
-          row-gap: 1.5rem;
-        }
-
-        .button {
-          font-weight: 700;
-          color: var(--text-white);
-          width: 30%;
-          padding: 1rem 0;
-          border: 1px solid var(--button_color);
-          background-color: var(--button_color);
-          border-radius: 1rem;
-        }
-
-        .button_off {
-          --button_color: #ff2222;
-        }
-
-        .button_on {
-          --button_color: #25e72c;
-        }
-      }
+  .button_on{
+    --button_color: #25e72c;
+  }
+}
     </style>
   </head>
   <body class="flex_column" style="row-gap: 2rem">
@@ -125,8 +133,8 @@ const char MAIN_page[] PROGMEM = R"rawliteral(
       <div class="flex_column" id="circulo_grande">
         <svg
           class="fondo"
-          width="115%"
-          height="115%"
+          width="130%"
+          height="130%"
           viewBox="0 0 240 240"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -187,8 +195,8 @@ const char MAIN_page[] PROGMEM = R"rawliteral(
         <div class="circulo flex_column" id="circulo_mediano">
           <svg
             class="fondo"
-            width="115%"
-            height="115%"
+            width="120%"
+            height="120%"
             viewBox="0 0 240 240"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -239,8 +247,8 @@ const char MAIN_page[] PROGMEM = R"rawliteral(
           <div class="circulo flex_column" id="circulo_peque">
             <svg
               class="fondo"
-              width="130%"
-              height="130%"
+              width="120%"
+              height="120%"
               viewBox="0 0 100 110"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -261,7 +269,7 @@ const char MAIN_page[] PROGMEM = R"rawliteral(
               <a href="%url_circ_peq_1%">
                 <path
                   d="M 20,60 A 30,30 0 0,0 80,60"
-                  stroke="%color_circ_peq_2%"
+                  stroke="%color_circ_peq_1%"
                   stroke-width="6"
                   fill="none"
                 />
@@ -271,8 +279,8 @@ const char MAIN_page[] PROGMEM = R"rawliteral(
             <div class="circulo flex_column" id="h_central">
               <svg
                 class="fondo"
-                width="65%"
-                height="65%"
+                width="40%"
+                height="40%"
                 viewBox="0 0 50 50"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -286,7 +294,7 @@ const char MAIN_page[] PROGMEM = R"rawliteral(
                     font-family="Arial"
                     font-size="40"
                     font-weight="600"
-                    fill="color_letra_h"
+                    fill="%color_letra_h%"
                   >
                     H
                   </text>
@@ -306,8 +314,9 @@ const char MAIN_page[] PROGMEM = R"rawliteral(
         <button class="button %clase_boton_heli%">HELIPUERTO</button>
       </a>
 
-      <a href="%url_boton_sec1%"></a>
-      <button class="button %clase_boton_sec1%">SECUENCIA 1</button>
+      <a href="%url_boton_sec1%">
+        <button class="button %clase_boton_sec1%">SECUENCIA 1</button>
+      </a>
 
       <a href="%url_boton_sec2%">
         <button class="button %clase_boton_sec2%">SECUENCIA 2</button>
@@ -345,5 +354,6 @@ const char MAIN_page[] PROGMEM = R"rawliteral(
 
     <p>SECUENCIA 5 (%STATE6%)</p>
     %BUTTON6% -->
+
     
 )rawliteral";

@@ -1,8 +1,8 @@
 #include <WiFi.h>
 #include "webpage.h" // <-- Include your webpage
 
-const char *ssid = "welim";
-const char *password = "wilywily";
+const char *ssid = "wisperPxl";
+const char *password = "123456789";
 
 WiFiServer server(80);
 
@@ -28,11 +28,15 @@ const int out_boton_sec3 = 24;
 const int out_boton_sec4 = 25;
 const int out_boton_sec5 = 26;
 
+const int out_letra_h = 27;
+
 // Define output states
 const String COLOR_CIRC_APAGADO = "#f5fa0bA6";
 const String COLOR_CIRC_ENCENDIDO = "#f5fa0b";
 const String CLASE_BOTON_ON = "button_on";
 const String CLASE_BOTON_OFF = "button_off";
+const String COLOR_LETRA_ON = "#ffffff";
+const String COLOR_LETRA_OFF = "#ffffffA6";
 
 String color_circ_grande_1 = COLOR_CIRC_APAGADO;
 String color_circ_grande_2 = COLOR_CIRC_APAGADO;
@@ -54,6 +58,8 @@ String clase_boton_sec2 = CLASE_BOTON_OFF;
 String clase_boton_sec3 = CLASE_BOTON_OFF;
 String clase_boton_sec4 = CLASE_BOTON_OFF;
 String clase_boton_sec5 = CLASE_BOTON_OFF;
+
+String color_letra_h = COLOR_LETRA_OFF;
 
 unsigned long currentTime = millis();
 unsigned long previousTime = 0;
@@ -78,6 +84,8 @@ String processor(String page)
   page.replace("%color_circ_peq_1%", color_circ_peq_1);
   page.replace("%color_circ_peq_2%", color_circ_peq_2);
 
+  page.replace("%color_letra_h%", color_letra_h);
+
   // Defining classes
   page.replace("%clase_boton_heli%", clase_boton_heli);
   page.replace("%clase_boton_sec1%", clase_boton_sec1);
@@ -87,26 +95,28 @@ String processor(String page)
   page.replace("%clase_boton_sec5%", clase_boton_sec5);
 
   // Defining urls
-  page.replace("url_circ_grande_1", color_circ_grande_1 == COLOR_CIRC_APAGADO ? "/circ_grande_1/on" : "/circ_grande_1/off");
-  page.replace("url_circ_grande_2", color_circ_grande_2 == COLOR_CIRC_APAGADO ? "/circ_grande_2/on" : "/circ_grande_2/off");
-  page.replace("url_circ_grande_3", color_circ_grande_3 == COLOR_CIRC_APAGADO ? "/circ_grande_3/on" : "/circ_grande_3/off");
-  page.replace("url_circ_grande_4", color_circ_grande_4 == COLOR_CIRC_APAGADO ? "/circ_grande_4/on" : "/circ_grande_4/off");
-  page.replace("url_circ_grande_5", color_circ_grande_5 == COLOR_CIRC_APAGADO ? "/circ_grande_5/on" : "/circ_grande_5/off");
+  page.replace("%url_circ_grande_1%", color_circ_grande_1 == COLOR_CIRC_APAGADO ? "/circ_grande_1/on" : "/circ_grande_1/off");
+  page.replace("%url_circ_grande_2%", color_circ_grande_2 == COLOR_CIRC_APAGADO ? "/circ_grande_2/on" : "/circ_grande_2/off");
+  page.replace("%url_circ_grande_3%", color_circ_grande_3 == COLOR_CIRC_APAGADO ? "/circ_grande_3/on" : "/circ_grande_3/off");
+  page.replace("%url_circ_grande_4%", color_circ_grande_4 == COLOR_CIRC_APAGADO ? "/circ_grande_4/on" : "/circ_grande_4/off");
+  page.replace("%url_circ_grande_5%", color_circ_grande_5 == COLOR_CIRC_APAGADO ? "/circ_grande_5/on" : "/circ_grande_5/off");
 
-  page.replace("url_circ_med_1", color_circ_med_1 == COLOR_CIRC_APAGADO ? "/circ_med_1/on" : "/circ_med_1/off");
-  page.replace("url_circ_med_2", color_circ_med_2 == COLOR_CIRC_APAGADO ? "/circ_med_2/on" : "/circ_med_2/off");
-  page.replace("url_circ_med_3", color_circ_med_3 == COLOR_CIRC_APAGADO ? "/circ_med_3/on" : "/circ_med_3/off");
-  page.replace("url_circ_med_4", color_circ_med_4 == COLOR_CIRC_APAGADO ? "/circ_med_4/on" : "/circ_med_4/off");
+  page.replace("%url_circ_med_1%", color_circ_med_1 == COLOR_CIRC_APAGADO ? "/circ_med_1/on" : "/circ_med_1/off");
+  page.replace("%url_circ_med_2%", color_circ_med_2 == COLOR_CIRC_APAGADO ? "/circ_med_2/on" : "/circ_med_2/off");
+  page.replace("%url_circ_med_3%", color_circ_med_3 == COLOR_CIRC_APAGADO ? "/circ_med_3/on" : "/circ_med_3/off");
+  page.replace("%url_circ_med_4%", color_circ_med_4 == COLOR_CIRC_APAGADO ? "/circ_med_4/on" : "/circ_med_4/off");
 
-  page.replace("url_circ_peq_1", color_circ_peq_1 == COLOR_CIRC_APAGADO ? "/circ_peq_1/on" : "/circ_peq_1/off");
-  page.replace("url_circ_peq_2", color_circ_peq_2 == COLOR_CIRC_APAGADO ? "/circ_peq_2/on" : "/circ_peq_2/off");
+  page.replace("%url_circ_peq_1%", color_circ_peq_1 == COLOR_CIRC_APAGADO ? "/circ_peq_1/on" : "/circ_peq_1/off");
+  page.replace("%url_circ_peq_2%", color_circ_peq_2 == COLOR_CIRC_APAGADO ? "/circ_peq_2/on" : "/circ_peq_2/off");
 
   page.replace("%url_boton_heli%", clase_boton_heli == CLASE_BOTON_OFF ? "/boton_heli/on" : "/boton_heli/off");
   page.replace("%url_boton_sec1%", clase_boton_sec1 == CLASE_BOTON_OFF ? "/boton_sec1/on" : "/boton_sec1/off");
-  page.replace("%url_boton_sec2%", clase_boton_sec2 == CLASE_BOTON_OFF ? "/boton_se2c/on" : "/boton_sec2/off");
+  page.replace("%url_boton_sec2%", clase_boton_sec2 == CLASE_BOTON_OFF ? "/boton_sec2/on" : "/boton_sec2/off");
   page.replace("%url_boton_sec3%", clase_boton_sec3 == CLASE_BOTON_OFF ? "/boton_sec3/on" : "/boton_sec3/off");
   page.replace("%url_boton_sec4%", clase_boton_sec4 == CLASE_BOTON_OFF ? "/boton_sec4/on" : "/boton_sec4/off");
   page.replace("%url_boton_sec5%", clase_boton_sec5 == CLASE_BOTON_OFF ? "/boton_sec5/on" : "/boton_sec5/off");
+
+  page.replace("%url_letra_h%", color_letra_h == COLOR_LETRA_OFF ? "/letra_h/on" : "/letra/off");
 
   return page;
 }
@@ -136,6 +146,8 @@ void setup()
   pinMode(out_boton_sec4, OUTPUT);
   pinMode(out_boton_sec5, OUTPUT);
 
+  pinMode(out_letra_h, OUTPUT);
+
   Serial.print("Pins set as output");
 
   digitalWrite(out_circ_grande_1, LOW);
@@ -158,6 +170,8 @@ void setup()
   digitalWrite(out_boton_sec3, LOW);
   digitalWrite(out_boton_sec4, LOW);
   digitalWrite(out_boton_sec5, LOW);
+
+  digitalWrite(out_letra_h, LOW);
 
   Serial.print("Connecting to ");
   Serial.println(ssid);
@@ -268,7 +282,7 @@ void loop()
               color_circ_grande_5 = COLOR_CIRC_APAGADO;
               digitalWrite(out_circ_grande_5, LOW);
             }
-            if (header.indexOf("GET /circ_med_1/on") >= 0)
+            else if (header.indexOf("GET /circ_med_1/on") >= 0)
             {
               Serial.println("url circ_med_1 on");
               color_circ_med_1 = COLOR_CIRC_ENCENDIDO;
@@ -411,6 +425,18 @@ void loop()
               Serial.println("url boton_sec5 off");
               clase_boton_sec5 = CLASE_BOTON_OFF;
               digitalWrite(out_boton_sec5, LOW);
+            }
+            else if (header.indexOf("GET /letra_h/on") >= 0)
+            {
+              Serial.println("url letra_h on");
+              color_letra_h = COLOR_LETRA_ON;
+              digitalWrite(out_letra_h, HIGH);
+            }
+            else if (header.indexOf("GET /letra_h/off") >= 0)
+            {
+              Serial.println("url letra_h off");
+              color_letra_h = COLOR_LETRA_OFF;
+              digitalWrite(out_letra_h, LOW);
             }
 
             client.println(processor(String(MAIN_page)));
